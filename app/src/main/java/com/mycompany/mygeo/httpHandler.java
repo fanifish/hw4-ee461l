@@ -58,9 +58,12 @@ public class httpHandler extends AsyncTask<String, Void, String> {
                     .getJSONObject("geometry").getJSONObject("location")
                     .getDouble("lat");
 
+            String loctype=((JSONArray)jsonObject.get("results")).getJSONObject(0).
+                    getString("formatted_address");
+             Log.d("loctypue:", ""+loctype);
             Log.d("latitude", "" + lat);
             Log.d("longitude", "" + lng);
-            message = ""+lat + " " + lng;
+            message = ""+lat + " " + lng+" "+loctype;
         } catch (JSONException e) {
             e.printStackTrace();
         }
