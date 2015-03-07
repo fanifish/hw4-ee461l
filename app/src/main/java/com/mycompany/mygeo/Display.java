@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ public class Display extends FragmentActivity
     LatLng mypos;
     double lat;
     double lng;
+    String formataddress = "";
 Button street;
 Button search;
     @Override
@@ -59,6 +61,10 @@ Button search;
         String strlng=tk.nextToken(" ");
         lat=Double.parseDouble(strlat);
         lng=Double.parseDouble(strlng);
+        while(tk.hasMoreTokens()) {
+            formataddress = formataddress + tk.nextToken(" ") + " ";
+        }
+        Log.d("formataddress:", " "+formataddress);
         mypos=new LatLng(lat, lng);
         SupportMapFragment mf = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mf.getMapAsync(this);
@@ -97,7 +103,8 @@ Button search;
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions()
                 .position(mypos)
-                .title("Marker"));
+                .title(formataddress));
+
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(mypos, 15));
        /* LatLngBounds.Builder builder = new LatLngBounds.Builder();
         builder.include(mypos);
